@@ -1,7 +1,7 @@
 /* 人狼ゲーム: オフライン用のキャッシュ */
-const CACHE='jinro-v11';
+const CACHE='jinro-v12';
 const FILES=['./','./index.html','./manifest.webmanifest','./apple-touch-icon.png','./icon-192.png','./icon-512.png'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 /* まずキャッシュを返し、裏で最新版を取りにいく(次に開いたときに新しくなる) */
 self.addEventListener('fetch',e=>{

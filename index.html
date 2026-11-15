@@ -641,11 +641,10 @@ function help(r){
   d.innerHTML=`<div class="box">${RIMG[r]?`<img class="pi" src="${RIMG[r]}" alt="">`:''}<h2>${RN[r]}</h2><p>${HELP[r]}</p><button class="main" style="margin-top:8px">閉じる</button></div>`;
   document.body.appendChild(d);
 }
-let 
 function pickIcon(i){
   saveNames();
   const used=cfg.icons.slice(0,cfg.n).map((v,j)=>j!==i?v:-9);
-  show(`<h2>${esc(cfg.names[i]||'プレイヤー'+(i+1))}さんのアイコン</h2><div class="grid">${AV.map((a,k)=>`<button class="ib" ${used.includes(k)?'disabled style="opacity:.3"':''} onclick="go(${k})">${ic(k,72)}</button>`).join('')+CUSTOM_ICONS.map((u,k)=>`<button class="ib" ${used.includes('c'+k)?'disabled style="opacity:.3"':''} onclick="go('c'+${k})">${ic(u,72)}</button>`).join('')}</div><input type="file" id="pf" accept="image/*" style="display:none" onchange="onPhoto(${i},this)"><button class="opt" onclick="document.getElementById('pf').click()">📷 写真を使う(撮影・アルバム)</button><button class="opt" onclick="go(-1)">アイコンなし</button><button class="opt" onclick="go('x')">戻る</button>`,k=>{if((typeof k==='string'&&k.startsWith('c'))cfg.icons[i]=CUSTOM_ICONS[+k.slice(1)];else if(k!=='x')cfg.icons[i]=k;saveNames();setup()});
+  show(`<h2>${esc(cfg.names[i]||'プレイヤー'+(i+1))}さんのアイコン</h2><div class="grid">${AV.map((a,k)=>`<button class="ib" ${used.includes(k)?'disabled style="opacity:.3"':''} onclick="go(${k})">${ic(k,72)}</button>`).join('')+CUSTOM_ICONS.map((u,k)=>`<button class="ib" ${used.includes('c'+k)?'disabled style="opacity:.3"':''} onclick="go('c'+${k})">${ic(u,72)}</button>`).join('')}</div><input type="file" id="pf" accept="image/*" style="display:none" onchange="onPhoto(${i},this)"><button class="opt" onclick="document.getElementById('pf').click()">📷 写真を使う(撮影・アルバム)</button><button class="opt" onclick="go(-1)">アイコンなし</button><button class="opt" onclick="go('x')">戻る</button>`,k=>{if(typeof k==='string'&&k.startsWith('c'))cfg.icons[i]=CUSTOM_ICONS[+k.slice(1)];else if(k!=='x')cfg.icons[i]=k;saveNames();setup()});
 }
 function onPhoto(i,el){
   const f=el.files&&el.files[0];if(!f)return;
